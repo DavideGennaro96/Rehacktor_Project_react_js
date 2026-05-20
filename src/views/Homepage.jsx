@@ -6,9 +6,9 @@ export default function Homepage () {
     // console.log(games);
     return (
         <>
-            <h1 className="text-3xl text-center font-bold">
+            {/* <h1 className="text-3xl text-center font-bold">
                 Homepage
-            </h1>
+            </h1> */}
             <GameList>
                 {games.map((game)=>{
                     return (
