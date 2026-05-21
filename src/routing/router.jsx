@@ -16,10 +16,10 @@ const router = createBrowserRouter([
                 loader: getAllGamesLoader
             },
 
-            { 
-            path:routes.search,
-            Component: SearchPage,
-            loader:getSearchedGames
+            {
+                path: routes.search,
+                Component: SearchPage,
+                loader: getSearchedGames
             }
         ]
     }

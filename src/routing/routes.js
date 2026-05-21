@@ -1,6 +1,6 @@
 const routes = {
     home: '/',
-    serach: '/search/:slug'
+    search: '/search/:slug'
 }
 
 export default routes;

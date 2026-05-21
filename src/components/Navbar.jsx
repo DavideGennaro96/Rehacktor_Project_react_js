@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
+import routes from '../routing/routes';
 
 export default function Navbar() {
+    const [slug, setSlug] = useState();
+
+    const handleChange = (e) => {
+        setSlug(e.target.value);
+    }
     return (
         <div className="navbar bg-base-100 shadow-sm">
             <div className="flex-1">
-                <a className="btn btn-ghost text-xl">Reactor</a>
+                <Link className="btn btn-ghost text-xl" to={routes.home}>Reactor </Link>
             </div>
             <div className="flex gap-2">
-                <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+                <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" onChange={handleChange} />
+                <Link className='btn btn-square' to={`/search/${slug}`}>
+                    <FaSearch />
+                </Link>
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
