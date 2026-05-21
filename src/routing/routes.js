@@ -1,6 +1,7 @@
 const routes = {
     home: '/',
-    search: '/search/:slug'
+    search: '/search/:slug',
+    genre: '/genre/:slug',
 }
 
 export default routes;
