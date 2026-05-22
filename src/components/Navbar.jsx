@@ -14,11 +14,23 @@ export default function Navbar() {
             <div className="flex-1">
                 <Link className="btn btn-ghost text-xl" to={routes.home}>Reactor </Link>
             </div>
+
+            <div>
+                <ul>
+                    <li>
+                        <Link to={routes.register}>Register</Link>
+                    </li>
+                    <li>
+                        <Link to={routes.login}>Login</Link>
+                    </li>
+                </ul>
+            </div>
             <div className="flex gap-2">
                 <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" onChange={handleChange} />
                 <Link className='btn btn-square' to={`/search/${slug}`}>
                     <FaSearch />
                 </Link>
+
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
