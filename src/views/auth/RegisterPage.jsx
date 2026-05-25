@@ -18,7 +18,7 @@ export default function RegisterPage() {
 
     const onSubmit = async (user_data) => {
 
-        let { data, error } = await supabase.auth.signUp(
+        await signUp(
             {
                 email: user_data.email,
                 password: user_data.password,
@@ -93,7 +93,7 @@ export default function RegisterPage() {
                     className="input input-lg mb-5 w-full"
                     {...register("password", {
                         required: "This field is required",
-                        minLength: 8
+                        minLength: { value: 8, message: "Password must be at least 8 characters" }
                     })}
                 />
 
