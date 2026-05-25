@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { supabase } from "../../database/supabase";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 export default function RegisterPage() {
 
@@ -9,6 +11,8 @@ export default function RegisterPage() {
         handleSubmit,
         formState: { errors },
     } = useForm();
+
+    const {signUp} =useContext(UserContext);
 
     const navigate = useNavigate();
 
