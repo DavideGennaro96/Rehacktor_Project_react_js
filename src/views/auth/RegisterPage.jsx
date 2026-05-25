@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { supabase } from "../../database/supabase";
 
 export default function RegisterPage() {
 
@@ -8,7 +10,25 @@ export default function RegisterPage() {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => console.log(data);
+    const navigate = useNavigate();
+
+    const onSubmit = async (user_data) => {
+
+        let { data, error } = await supabase.auth.signUp(
+            {
+                email: user_data.email,
+                password: user_data.password,
+                options: {
+                    data: {
+                        first_name: user_data.first_name,
+                        last_name: user_data.last_name,
+                        username: user_data.username
+                    }
+                }
+            }
+        )
+        navigate('/');
+    };
     return (
         <main className="h-screen flex justify-center items-center">
 
@@ -25,9 +45,62 @@ export default function RegisterPage() {
                         {errors.first_name.message}
                     </p>
                 )}
+                <input
+                    type="text"
+                    placeholder="Last Name"
+                    className="input input-lg mb-5 w-full"
+                    {...register("last_name", { required: "This field is required" })}
+                />
+
+                {errors.last_name && (
+                    <p role="alert" className="text-red-500 mb-6">
+                        {errors.last_name.message}
+                    </p>
+                )}
+
+                <input
+                    type="text"
+                    placeholder="Username"
+                    className="input input-lg mb-5 w-full"
+                    {...register("username", { required: "This field is required" })}
+                />
+
+                {errors.username && (
+                    <p role="alert" className="text-red-500 mb-6">
+                        {errors.username.message}
+                    </p>
+                )}
+                <input
+                    type="email"
+                    placeholder="Email"
+                    className="input input-lg mb-5 w-full"
+                    {...register("email", { required: "This field is required" })}
+                />
+
+                {errors.email && (
+                    <p role="alert" className="text-red-500 mb-6">
+                        {errors.email.message}
+                    </p>
+                )}
+
+                <input
+                    type="password"
+                    placeholder="Password"
+                    className="input input-lg mb-5 w-full"
+                    {...register("password", {
+                        required: "This field is required",
+                        minLength: 8
+                    })}
+                />
+
+                {errors.password && (
+                    <p role="alert" className="text-red-500 mb-6">
+                        {errors.password.message}
+                    </p>
+                )}
+
+                <button className="btn btn-neutral p-5">Sign in</button>
             </form>
-
         </main>
-    )
-
+    );
 }
