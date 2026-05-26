@@ -8,12 +8,15 @@ import GenrePage from "../views/GenrePage";
 import AuthenticationLayout from "../components/Authentication/AuthenticationLayout";
 import RegisterPage from "../views/auth/RegisterPage";
 import LoginPage from "../views/auth/LoginPage";
+import ProfilePage from "../views/auth/ProfilePage";
+// import ProfileSettingsPage from "../views/auth/ProfileSettingsPage";
 
 const router = createBrowserRouter([
     {
         path: routes.home,
         Component: Layout,
         loader: getAllGenres,
+        errorElement: <p>Ops! Il server non risponde, riprova più tardi.</p>,
         children: [
             {
                 path: routes.home,
@@ -46,7 +49,16 @@ const router = createBrowserRouter([
             {
                 path: routes.login,
                 Component: LoginPage
-            }
+            },
+            {
+                path:routes.profile,
+                Component: ProfilePage
+            },
+            // {
+            //     path:routes.profile_settings,
+
+            //     Component: ProfileSettingsPage
+            // },
         ]
     }
 ]);
