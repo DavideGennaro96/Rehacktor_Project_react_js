@@ -2,14 +2,16 @@ import { createBrowserRouter } from "react-router";
 import Layout from "../components/Layout";
 import Homepage from "../views/Homepage";
 import routes from "./routes";
-import { getAllGamesLoader, getAllGenres, getFilteredBuGenreGames, getSearchedGames } from "./loaders";
+import { getAllGamesLoader, getAllGenres, getFilteredBuGenreGames, getSearchedGames, getGamesDetails } from "./loaders";
 import SearchPage from "../views/SearchPage";
-import GenrePage from "../views/GenrePage"; 
+import GenrePage from "../views/GenrePage";
 import AuthenticationLayout from "../components/Authentication/AuthenticationLayout";
 import RegisterPage from "../views/auth/RegisterPage";
 import LoginPage from "../views/auth/LoginPage";
 import ProfilePage from "../views/auth/ProfilePage";
 import ProfileSettingsPage from "../views/auth/ProfileSettingsPage";
+import DetailPage from "../views/DetailPage";
+
 
 const router = createBrowserRouter([
     {
@@ -35,7 +37,13 @@ const router = createBrowserRouter([
                 Component: GenrePage,
                 loader: getFilteredBuGenreGames
 
-            }
+            },
+            {
+                path: routes.detail,
+
+                Component: DetailPage,
+                loader: getGamesDetails
+            },
         ]
     },
     {
@@ -51,14 +59,16 @@ const router = createBrowserRouter([
                 Component: LoginPage
             },
             {
-                path:routes.profile,
+                path: routes.profile,
                 Component: ProfilePage
             },
             {
-                path:routes.profile_settings,
+                path: routes.profile_settings,
 
-                 Component: ProfileSettingsPage
+                Component: ProfileSettingsPage
             },
+
+
         ]
     }
 ]);
