@@ -1,10 +1,27 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Ryu from "../../assets/ryu.png";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router";
+import routes from "../../routing/routes";
+import { supabase } from "../../database/supabase";
 
 export default function ProfilePage() {
     const { user, profile } = useContext(UserContext);
+    const [avatarUrl, setAvatarUrl] = useState();
+
+    const dowload_avatar = async () => {
+        if(profile) {
+            const {data, error}= await supabase.storage
+                .from("avatars")
+                .download(profile.avatar_url);
+            const url = URL.createObjectURL(data);
+            setAvatarUrl(url);
+        }
+    };
+
+    useEffect(() => {
+        dowload_avatar();
+    }, [profile]);
 
     return (
         <main className="h-screen">
@@ -12,7 +29,7 @@ export default function ProfilePage() {
                 <>
                     <article className="mt-10 flex flex-col items-center">
                         <img
-                            src={Ryu}
+                            src={avatarUrl ?? Ryu}
                             className="w-24 h-24 rounded-full"
                             alt="Profile Image"
                         />

@@ -1,10 +1,42 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router";
-import routes from "../../router/routes";
+import routes from "../../routing/routes";
+import { supabase } from "../../database/supabase";
 
 export default function ProfileSettingsPage() {
+    const [file, setFile] = useState();
+    const [preview, setPreview] = useState();
+    const { profile, getUser } = useContext(UserContext);
+
+    const handleChange = (e) => {
+        setFile(() => e.target.files[0]);
+    };
+
+    useEffect(() => {
+        if (file) {
+            const imageUrl = URL.createObjectURL(file);
+            setPreview(() => imageUrl);
+        }
+    }, [file]);
+
+    const handleAvatarSubmit = async (e) => {
+        e.preventDefault();
+        const fileExt = file.name.split(".").pop(); // 'png'
+        const fileName = `${profile.id}${Math.random()}.${fileExt}`;
+        await supabase.storage.from("avatars").upload(fileName, file);
+        await supabase
+            .from("profiles")
+            .upsert({ id: profile.id, avatar_url: fileName })
+            .select();
+        await getUser();
+
+
+    };
+
+
+
     const { updateProfile } = useContext(UserContext);
 
     const {
@@ -37,7 +69,7 @@ export default function ProfileSettingsPage() {
                         {errors.first_.message}
                     </p>
                 )}
-                
+
                 <input
                     type="text"
                     placeholder="Last Name"
@@ -50,7 +82,7 @@ export default function ProfileSettingsPage() {
                     </p>
                 )}
 
-                
+
                 <input
                     type="text"
                     placeholder="Username"
@@ -65,6 +97,15 @@ export default function ProfileSettingsPage() {
 
                 <button className="btn btn-neutral p-5">Edit</button>
             </form>
+            <form className="p-10 bg-nav-gray w-1/2" onSubmit={handleAvatarSubmit}>
+                <input
+                    type="file"
+                    className="file-input file-input-lg w-full mb-5"
+                    onChange={handleChange}
+                />
+                <button className="btn btn-neutral p-5">Change Avatar</button>
+            </form>
+            <img src={preview} alt="" className="w-50" />
         </main>
     );
 }
