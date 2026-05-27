@@ -22,8 +22,9 @@ export async function getFilteredBuGenreGames ({params}){
     return json.results;
 }
 
-export async function getGamesDetails ({params}){
-    const promise =await fetch (`https://api.rawg.io/api/games?${params.id}}?key=${import.meta.env.VITE_API_KEY}`);
-    const json =await promise.json();
+export async function getGamesDetails({ params }) {
+    
+    const response = await fetch(`https://api.rawg.io/api/games/${params.id}?key=${import.meta.env.VITE_API_KEY}`);
+    const json = await response.json();
     return json;
 }
