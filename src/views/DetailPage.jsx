@@ -3,12 +3,12 @@ import Header from "../components/Header";
 import { FaCircleArrowLeft } from "react-icons/fa6";
 import BodySection from "../components/BodySection";
 import { useContext } from "react";
-import { UserContext } from "..context/UserContext";
+import { UserContext } from "../context/UserContext";
 
 export default function DetailPage() {
     const game = useLoaderData();
     const navigate = useNavigate();
-    console.log(game);
+    const {profile} =useContext(UserContext);
 
     return (
         <>
@@ -23,7 +23,7 @@ export default function DetailPage() {
                     onClick={() => navigate(-1)}
                 />
                 <Header game={game} />
-                {profile && <BodySection />}
+                {profile && <BodySection game ={game} profile_id={profile.id} />}
             </main>
         </>
     );
