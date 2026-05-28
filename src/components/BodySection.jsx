@@ -6,6 +6,34 @@ import { useState, useEffect } from "react";
 export default function BodySection({ game, profile_id }) {
 
     const [isFavourite, setIsFavourite] = useState(false);
+    const [description, setDescription] = useState();
+    const [gameReviews, setGameReviews] = useState();
+    const [checkReview, setCheckReview] = useState(false);
+
+    const handle_description = (e) => {
+        setDescription(e.target.value);
+    };
+
+    const get_reviews = async () => {
+        let { data: reviews, error } = await supabase
+            .from("reviews")
+            .select("*")
+            .eq("game_id", game.id);
+
+        setGameReviews(reviews);
+    };
+
+    const add_review = async () => {
+        const { data, error } = await supabase
+            .from("reviews")
+            .insert([
+                { profile_id, game_id: game.id, game_name: game.name, description },
+            ])
+            .select();
+
+        setDescription("");
+        setCheckReview(!checkReview);
+    };
     const get_favourite = async () => {
         let { data: favourites, error } = await supabase
             .from("favourites")
@@ -13,14 +41,14 @@ export default function BodySection({ game, profile_id }) {
             .eq("profile_id", profile_id)
             .eq("game_id", game.id);
 
-        if(favourites.length >0) setIsFavourite(true);
+        if (favourites.length > 0) setIsFavourite(true);
     };
 
     useEffect(
         () => {
             get_favourite()
-        }, []
-    )
+            get_reviews();
+        }, [checkReview]);
 
     const add_game = async () => {
         const { data, error } = await supabase
@@ -46,7 +74,22 @@ export default function BodySection({ game, profile_id }) {
                 <textarea
                     className="textarea w-1/2"
                     placeholder="Type your review"
+                    onChange={handle_description}
+                    value={description}
                 ></textarea>
+
+
+                <button className="btn bg-nav-gray w-1/2" onClick={add_review}>
+                    Send
+                </button>
+                <div className="border border-nav-gray h-50 w-2/3 my-3 overflow-auto text-white">
+                    {gameReviews && gameReviews.map((review) => {
+                        return (
+                            <p key={review.id} className="text-end my-3 mx-2 p-2 border border-white">{review.description}</p>
+                        )
+                    })}
+                </div>
+
             </div>
             <div>
                 {isFavourite &&

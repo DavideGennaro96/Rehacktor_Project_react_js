@@ -8,10 +8,11 @@ import { supabase } from "../../database/supabase";
 export default function ProfilePage() {
     const { user, profile } = useContext(UserContext);
     const [avatarUrl, setAvatarUrl] = useState();
+    const [userFavourites, setUserFavourites] = useState();
 
     const dowload_avatar = async () => {
-        if(profile) {
-            const {data, error}= await supabase.storage
+        if (profile) {
+            const { data, error } = await supabase.storage
                 .from("avatars")
                 .download(profile.avatar_url);
             const url = URL.createObjectURL(data);
@@ -19,8 +20,19 @@ export default function ProfilePage() {
         }
     };
 
+    const get_favourites = async () => {
+        if (profile) {
+            let { data: favourites, error } = await supabase
+                .from("favourites")
+                .select("*")
+                .eq("profile_id", profile.id);
+            setUserFavourites(favourites);
+        }
+    };
+
     useEffect(() => {
         dowload_avatar();
+        get_favourites();
     }, [profile]);
 
     return (
@@ -44,9 +56,21 @@ export default function ProfilePage() {
                             <p>Username: {profile.username}</p>
                             <p>Email: {user.email}</p>
 
-                            <Link className="btn btn-outline mt-3" to= {routes.profile_settings}>
-                            Settings</Link>
+                            <Link className="btn btn-outline mt-3" to={routes.profile_settings}>
+                                Settings</Link>
                         </article>
+                    </section>
+                    <section className="grid grid-cols-4 gap-4 my-10">
+                        {userFavourites &&
+                            userFavourites.map((game) => {
+                                return (
+                                    <div className="card bg-base-100 shadow-sm" key={game.id}>
+                                        <div className="card-body">
+                                            <h2 className="card-title">{game.game_name}</h2>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                     </section>
                 </>
             )}
