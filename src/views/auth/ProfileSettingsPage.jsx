@@ -8,7 +8,9 @@ import { supabase } from "../../database/supabase";
 export default function ProfileSettingsPage() {
     const [file, setFile] = useState();
     const [preview, setPreview] = useState();
-    const { profile, getUser } = useContext(UserContext);
+
+    
+    const { profile, getUser, updateProfile } = useContext(UserContext);
 
     const handleChange = (e) => {
         setFile(() => e.target.files[0]);
@@ -31,13 +33,7 @@ export default function ProfileSettingsPage() {
             .upsert({ id: profile.id, avatar_url: fileName })
             .select();
         await getUser();
-
-
     };
-
-
-
-    const { updateProfile } = useContext(UserContext);
 
     const {
         register,
@@ -51,6 +47,7 @@ export default function ProfileSettingsPage() {
         updateProfile(data);
         navigate(routes.profile);
     };
+
     return (
         <main className="h-screen flex justify-center items-center">
             <form
@@ -64,9 +61,10 @@ export default function ProfileSettingsPage() {
                     {...register("first_name", { required: "This field is required" })}
                 />
 
-                {errors.first_ && (
+                
+                {errors.first_name && (
                     <p role="alert" className="text-red-500 mb-6">
-                        {errors.first_.message}
+                        {errors.first_name.message}
                     </p>
                 )}
 
@@ -81,7 +79,6 @@ export default function ProfileSettingsPage() {
                         {errors.last_name.message}
                     </p>
                 )}
-
 
                 <input
                     type="text"

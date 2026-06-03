@@ -1,6 +1,6 @@
 import { Outlet, useLoaderData } from "react-router";
 import Navbar from "../components/Navbar";
-// import Footer from "../components/Footer";
+import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
 
 
@@ -18,7 +18,7 @@ export default function Layout() {
 
                 </div>
             </section>
-            {/* <Footer /> */}
+             <Footer />
         </>
     );
 }

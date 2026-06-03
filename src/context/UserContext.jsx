@@ -50,7 +50,7 @@ export function UserContextProvider({ children }) {
         .from('profiles')
         .update(newProfile)
         .eq('id', user.id)
-        select();
+        .select();
 
         await getUser();
     }
