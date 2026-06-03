@@ -1,20 +1,27 @@
 import { Link } from "react-router";
+import './Sidebar.jsx'; 
 
 export default function Sidebar({ genres }) {
     return (
-        <>
-            <nav className="h-screen bg-nav-gray">
-                <ul className="px-5">
+        <nav className="h-screen w-64 custom-sidebar"> 
+            <div className="px-5">
+                <h2 className="sidebar-title">Generi</h2>
+                
+                <ul>
                     {genres.map((genre) => {
                         return (
-                            <li className="mb-2" key={genre.id}>
-                                <Link to={`/genre/${genre.slug}`}> {genre.name}</Link>
+                            <li className="mb-1" key={genre.id}>
+                                <Link 
+                                    to={`/genre/${genre.slug}`}
+                                    className="sidebar-link"
+                                > 
+                                    {genre.name}
+                                </Link>
                             </li>
                         );
                     })}
-
                 </ul>
-            </nav>
-        </>
+            </div>
+        </nav>
     );
 }
