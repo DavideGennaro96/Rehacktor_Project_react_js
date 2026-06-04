@@ -4,21 +4,26 @@ import { FaSearch } from 'react-icons/fa';
 import routes from '../routing/routes';
 import { UserContext } from '../context/UserContext';
 
-
 export default function Navbar() {
     const [slug, setSlug] = useState('');
+    const navigate = useNavigate();
+    const { user, signOut, profile } = useContext(UserContext);
 
     const handleChange = (e) => {
         setSlug(e.target.value);
     };
 
-    const navigate = useNavigate();
-    const { user, signOut } = useContext(UserContext);
-
     const handleLogout = async () => {
         await signOut();
         navigate('/');
     };
+
+    const defaultAvatar = "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
+
+    
+    const currentAvatar = profile?.avatar_url
+        ? `https://ajikyvxbwzzswqvlehsh.supabase.co/storage/v1/object/public/avatars/${profile.avatar_url}?t=${new Date().getTime()}`
+        : defaultAvatar;
 
     return (
         <div className="navbar shadow-md custom-navbar">
@@ -58,26 +63,28 @@ export default function Navbar() {
                 </div>
 
                 {/* User Dropdown Menu */}
-                <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                        <div className="w-10 rounded-full ring ring-offset-2" style={{ borderColor: 'var(--color-sage)' }}>
-                            <img
-                                alt="User Avatar"
-                                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                            />
+                {user && (
+                    <div className="dropdown dropdown-end">
+                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                            <div className="w-10 rounded-full ring ring-offset-2" style={{ borderColor: 'var(--color-sage)' }}>
+                                <img
+                                    alt="User Avatar"
+                                    src={currentAvatar}
+                                />
+                            </div>
                         </div>
+                        <ul
+                            tabIndex={0}
+                            className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow-lg">
+                            <li>
+                                <Link to={routes.profile}>Profile</Link>
+                            </li>
+                            <li onClick={handleLogout}>
+                                <p>Logout</p>
+                            </li>
+                        </ul>
                     </div>
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow-lg">
-                        <li>
-                            <Link to={routes.profile}>Profile</Link>
-                        </li>
-                        <li onClick={handleLogout}>
-                            <p>Logout</p>
-                        </li>
-                    </ul>
-                </div>
+                )}
             </div>
         </div>
     );
