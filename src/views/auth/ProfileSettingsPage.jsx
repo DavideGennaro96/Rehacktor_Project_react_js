@@ -9,9 +9,6 @@ export default function ProfileSettingsPage() {
     const [file, setFile] = useState();
     const [preview, setPreview] = useState();
 
-    
-    const [showAlert, setShowAlert] = useState(false);
-
     const { profile, getUser, updateProfile } = useContext(UserContext);
 
     const handleChange = (e) => {
@@ -36,19 +33,15 @@ export default function ProfileSettingsPage() {
             .upsert({ id: profile.id, avatar_url: fileName })
             .select();
         await getUser();
-
-        
-        setShowAlert(true);
-        setTimeout(() => {
-            setShowAlert(false);
-        }, 3000);
     };
 
     const {
         register,
         handleSubmit,
+        setError, // <--- Unico inserimento necessario per attivare la scritta rossa
         formState: { errors },
     } = useForm({
+
         defaultValues: {
             first_name: profile?.first_name || "",
             last_name: profile?.last_name || "",
@@ -58,30 +51,34 @@ export default function ProfileSettingsPage() {
 
     const navigate = useNavigate();
 
+    
     const onSubmit = (data) => {
-        updateProfile(data);
-        navigate(routes.profile);
+        updateProfile(data)
+            .then(() => {
+                navigate(routes.profile);
+            })
+            .catch((error) => {
+                console.error(error);
+                setError("username", {
+                    type: "manual",
+                    message: "Questo username è già in uso da un altro utente."
+                });
+            });
     };
 
     return (
-        <main className="min-h-screen bg-[#F9F5F0] py-10 px-4 sm:px-8 md:px-16 lg:px-24 flex flex-col items-center justify-center relative">
 
-            
-            {showAlert && (
-                <div className="toast toast-top toast-end z-50 mt-16 animate-fadeIn">
-                    <div className="alert alert-success shadow-lg border-none text-white" style={{ backgroundColor: 'var(--color-sage, #8FBC8F)' }}>
-                        <span>Avatar aggiornato con successo! ✨</span>
-                    </div>
-                </div>
-            )}
+        <main className="min-h-screen bg-[#F9F5F0] py-10 px-4 sm:px-8 md:px-16 lg:px-24 flex flex-col items-center justify-center">
 
             <div className="w-full max-w-5xl">
                 <h2 className="text-2xl sm:text-3xl font-bold text-[#2C1E1A] mb-8 text-center uppercase tracking-wider">
                     Modifica Profilo
                 </h2>
 
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                    {/* Form Dati Personali */}
+
+
                     <form
                         className="p-6 sm:p-8 bg-[#F9F5F0] border-2 border-[#D5B99A] rounded-xl shadow-sm flex flex-col"
                         onSubmit={handleSubmit(onSubmit)}
@@ -156,7 +153,7 @@ export default function ProfileSettingsPage() {
                         </button>
                     </form>
 
-                    {/* Sezione Caricamento Avatar */}
+
                     <div className="space-y-6">
                         <form
                             className="p-6 sm:p-8 bg-[#F9F5F0] border-2 border-[#D5B99A] rounded-xl shadow-sm flex flex-col"
@@ -192,6 +189,7 @@ export default function ProfileSettingsPage() {
                                 Aggiorna Avatar
                             </button>
                         </form>
+
 
                         {preview && (
                             <article className="p-6 bg-[#F9F5F0] border-2 border-[#D5B99A] rounded-xl flex flex-col items-center text-center shadow-sm animate-fadeIn">

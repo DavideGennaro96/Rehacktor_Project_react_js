@@ -213,3 +213,264 @@
   color: var(--color-terracotta) !important;
 }
 
+/* Container principale della pagina */
+.register-container {
+    min-height: 100vh;
+    background-color: var(--color-cream-light, #F9F5F0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+@media (min-width: 640px) {
+    .register-container {
+        padding: 2rem;
+    }
+}
+
+/* Wrapper del titolo e del form */
+.register-wrapper {
+    width: 100%;
+    max-width: 36rem; /* equivalente a max-w-xl */
+}
+
+/* Titolo della pagina */
+.register-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-dark-wood, #2C1E1A);
+    margin-bottom: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+@media (min-width: 640px) {
+    .register-title {
+        font-size: 1.875rem;
+    }
+}
+
+/* Form di registrazione */
+.register-form {
+    padding: 1.5rem;
+    background-color: var(--color-cream-light, #F9F5F0);
+    border: 2px solid var(--color-hazelnut, #D5B99A);
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .register-form {
+        padding: 2.5rem;
+    }
+}
+
+/* Etichette dei campi di testo */
+.register-label-text {
+    color: var(--color-dark-wood, #2C1E1A);
+    font-weight: 500;
+}
+
+/* Input di testo */
+.register-input {
+    width: 100%;
+    background-color: #ffffff !important;
+    color: var(--color-dark-wood, #2C1E1A) !important;
+    border-color: var(--color-hazelnut, #D5B99A) !important;
+}
+
+.register-input:focus {
+    border-color: var(--color-terracotta, #B87355) !important;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+/* Messaggi di errore sotto i campi */
+.register-error-message {
+    color: var(--color-terracotta, #B87355);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+/* Wrapper della Checkbox "Ricordami" */
+.register-checkbox-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    align-items: center;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+/* La Checkbox personalizzata */
+.register-checkbox {
+    border: 2px solid var(--color-hazelnut, #D5B99A) !important;
+    border-radius: 0.25rem;
+    --chkbg: var(--color-terracotta, #B87355);
+    --chkfg: var(--color-cream-light, #F9F5F0);
+}
+
+.register-checkbox:checked {
+    border-color: var(--color-terracotta, #B87355) !important;
+}
+
+/* Pulsante d'invio */
+.register-submit-btn {
+    width: 100%;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.75rem;
+    border: none !important;
+    background-color: var(--color-dark-wood, #2C1E1A) !important;
+    color: var(--color-cream-light, #F9F5F0) !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.register-submit-btn:hover {
+    background-color: var(--color-terracotta, #B87355) !important;
+}
+
+/* Container principale della pagina */
+.login-container {
+    min-height: 100vh;
+    background-color: var(--color-cream-light, #F9F5F0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+@media (min-width: 640px) {
+    .login-container {
+        padding: 2rem;
+    }
+}
+
+/* Wrapper del titolo e del form */
+.login-wrapper {
+    width: 100%;
+    max-width: 36rem; /* Stessa larghezza della RegisterPage */
+}
+
+/* Titolo della pagina */
+.login-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-dark-wood, #2C1E1A);
+    margin-bottom: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+@media (min-width: 640px) {
+    .login-title {
+        font-size: 1.875rem;
+    }
+}
+
+/* Form di Login */
+.login-form {
+    padding: 1.5rem;
+    background-color: var(--color-cream-light, #F9F5F0);
+    border: 2px solid var(--color-hazelnut, #D5B99A);
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .login-form {
+        padding: 2.5rem;
+    }
+}
+
+/* Banner di errore per credenziali errate */
+.login-form-alert {
+    background-color: #D9534F;
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Etichette dei campi */
+.login-label-text {
+    color: var(--color-dark-wood, #2C1E1A);
+    font-weight: 500;
+}
+
+/* Input di testo ed email */
+.login-input {
+    width: 100%;
+    background-color: #ffffff !important;
+    color: var(--color-dark-wood, #2C1E1A) !important;
+    border-color: var(--color-hazelnut, #D5B99A) !important;
+}
+
+.login-input:focus {
+    border-color: var(--color-terracotta, #B87355) !important;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+/* Messaggi di errore rossi sotto i campi */
+.login-error-message {
+    color: var(--color-terracotta, #B87355);
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+/* Contenitore Ricordami */
+.login-checkbox-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    align-items: center;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+/* Checkbox di DaisyUI stilizzata */
+.login-checkbox {
+    border: 2px solid var(--color-hazelnut, #D5B99A) !important;
+    border-radius: 0.25rem;
+    --chkbg: var(--color-terracotta, #B87355);
+    --chkfg: var(--color-cream-light, #F9F5F0);
+}
+
+.login-checkbox:checked {
+    border-color: var(--color-terracotta, #B87355) !important;
+}
+
+/* Pulsante Sign In */
+.login-submit-btn {
+    width: 100%;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.75rem;
+    border: none !important;
+    background-color: var(--color-dark-wood, #2C1E1A) !important;
+    color: var(--color-cream-light, #F9F5F0) !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.login-submit-btn:hover {
+    background-color: var(--color-terracotta, #B87355) !important;
+}

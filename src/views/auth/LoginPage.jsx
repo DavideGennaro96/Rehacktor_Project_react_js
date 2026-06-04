@@ -3,63 +3,120 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { useContext } from "react";
 
-export default function LoginPage() {
 
+export default function LoginPage() {
 
     const {
         register,
         handleSubmit,
+        setError, 
         formState: { errors },
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            email: "",
+            password: "",
+            remember_me: false
+        }
+    });
 
     const navigate = useNavigate();
     const { login } = useContext(UserContext);
 
-    const onSubmit = async (user_data) => {
-        await login ({
-            email:user_data.email,
+   
+    const onSubmit = (user_data) => {
+        login({
+            email: user_data.email,
             password: user_data.password,
-        });
-        navigate('/');
+        })
+            .then(() => {
+                navigate('/');
+            })
+            .catch((error) => {
+                console.error(error);
+                
+                setError("root.serverError", {
+                    type: "manual",
+                    message: "Email o password non valide. Riprova."
+                });
+            });
     };
+
     return (
-        <main className="h-screen flex justify-center items-center">
-            <form
-                className="p-10 bg-nav-gray w-1/2"
-                onSubmit={handleSubmit(onSubmit)}
-            >
-                <input
-                    type="email"
-                    placeholder="Email"
-                    className="input input-lg mb-5 w-full"
-                    {...register("email", { required: "This field is required" })}
-                />
+        <main className="login-container">
+            <div className="login-wrapper">
 
-                {errors.email && (
-                    <p role="alert" className="text-red-500 mb-6">
-                        {errors.email.message}
-                    </p>
-                )}
-                <input
-                    type="password"
-                    placeholder="Password"
-                    className="input input-lg mb-5 w-full"
-                    {...register("password", {
-                        required: "This field is required",
-                       minLength: { value: 8, message: "Password must be at least 8 characters" }
-                    })}
-                />
+                <h2 className="login-title">
+                    Accedi al tuo Account
+                </h2>
 
-                {errors.password && (
-                    <p role="alert" className="text-red-500 mb-6">
-                        {errors.password.message}
-                    </p>
-                )}
+                <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
 
-                <button className="btn btn-neutral p-5">Sign in</button>
-            </form>
+                    
+                    {errors.root?.serverError && (
+                        <div className="login-form-alert" role="alert">
+                            {errors.root.serverError.message}
+                        </div>
+                    )}
+
+                    {/* CAMPO EMAIL */}
+                    <label className="form-control w-full mb-2">
+                        <div className="label py-1">
+                            <span className="login-label-text">Email</span>
+                        </div>
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            className="input input-bordered login-input"
+                            {...register("email", { required: "Questo campo è richiesto" })}
+                        />
+                        {errors.email && (
+                            <p role="alert" className="login-error-message">
+                                {errors.email.message}
+                            </p>
+                        )}
+                    </label>
+
+                    {/* CAMPO PASSWORD */}
+                    <label className="form-control w-full mb-4">
+                        <div className="label py-1">
+                            <span className="login-label-text">Password</span>
+                        </div>
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            className="input input-bordered login-input"
+                            {...register("password", {
+                                required: "Questo campo è richiesto",
+                                minLength: { value: 8, message: "La password deve contenere almeno 8 caratteri" }
+                            })}
+                        />
+                        {errors.password && (
+                            <p role="alert" className="login-error-message">
+                                {errors.password.message}
+                            </p>
+                        )}
+                    </label>
+
+                    {/* TASTO RICORDAMI */}
+                    <div className="form-control mb-6">
+                        <label className="label cursor-pointer login-checkbox-container">
+                            <input
+                                type="checkbox"
+                                className="checkbox login-checkbox"
+                                {...register("remember_me")}
+                            />
+                            <span className="login-label-text font-medium selection:bg-transparent">
+                                Ricordami su questo dispositivo
+                            </span>
+                        </label>
+                    </div>
+
+                    {/* BOTTONE ACCEDI */}
+                    <button type="submit" className="btn login-submit-btn">
+                        Sign In
+                    </button>
+                </form>
+            </div>
         </main>
     );
-
-
 }
