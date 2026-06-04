@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import './GameCard.jsx'; 
+
 
 export default function GameCard({ game }) {
     return (

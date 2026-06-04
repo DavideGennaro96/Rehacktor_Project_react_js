@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import routes from '../routing/routes';
 import { UserContext } from '../context/UserContext';
-import './Navbar.jsx';
+
 
 export default function Navbar() {
     const [slug, setSlug] = useState('');
@@ -60,7 +60,7 @@ export default function Navbar() {
                 {/* User Dropdown Menu */}
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                        <div className="w-10 rounded-full ring ring-offset-2" style={{ borderColor: 'var(--color-dark-wood)' }}>
+                        <div className="w-10 rounded-full ring ring-offset-2" style={{ borderColor: 'var(--color-sage)' }}>
                             <img
                                 alt="User Avatar"
                                 src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"

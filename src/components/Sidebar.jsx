@@ -1,11 +1,20 @@
 import { Link } from "react-router";
-import './Sidebar.jsx'; 
 
-export default function Sidebar({ genres }) {
+export default function Sidebar({ genres, isMobile = false, setIsOpen }) {
+    
+    const handleLinkClick = () => {
+        if (isMobile && setIsOpen) {
+            setIsOpen(false);
+        }
+    };
+
     return (
-        <nav className="h-screen w-64 custom-sidebar"> 
-            <div className="px-5">
-                <h2 className="sidebar-title">Generi</h2>
+        
+        <nav className={`custom-sidebar w-full lg:h-screen lg:sticky lg:top-0 lg:overflow-y-auto ${isMobile ? 'sidebar-dropdown-mode' : 'sidebar-desktop-mode'}`}> 
+            <div className="px-5 py-4">
+                
+                
+                {!isMobile && <h2 className="sidebar-title">Generi</h2>}
                 
                 <ul>
                     {genres.map((genre) => {
@@ -14,6 +23,7 @@ export default function Sidebar({ genres }) {
                                 <Link 
                                     to={`/genre/${genre.slug}`}
                                     className="sidebar-link"
+                                    onClick={handleLinkClick}
                                 > 
                                     {genre.name}
                                 </Link>
